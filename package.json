@@ -1,0 +1,23 @@
+{
+  "name": "ngubers-be",
+  "version": "1.0.0",
+  "description": "Back End for ngubers application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index"
+  },
+  "keywords": [
+    "nodejs"
+  ],
+  "author": "Ngubers",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "mongoose": "^6.3.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
+}
