@@ -1,3 +1,7 @@
+const path = require('path')
+const root = path.resolve(__dirname, '../')
+const env = require('dotenv').config({path: root + '/.env'})
+
 module.exports = {
-    url: "mongodb+srv://ngubers:17lDPtpeAwmjjVPV@ngubers.qysz6.mongodb.net/ngubers?retryWrites=true&w=majority"
+    url: env.parsed.DATABASE_URL
 }
