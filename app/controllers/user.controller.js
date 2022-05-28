@@ -1,34 +1,35 @@
-const db = require('../models')
+const userService = require('../services/user.service')
 
-const User = db.users
+exports.list = async (req, res) => {
+    try {
+        const response = await userService.list()
+        const {data} = response
 
-exports.findAll = (req, res) => {
-    User.find()
-    .then((response) => {
-        res.send(response)
-    })
-    .catch(error => {
-        res.status(500).send({
-            message: error.message || "Some error while retrieving users."
+        res.json({
+            status: "OK",
+            data
         })
-    })
+    } catch(error) {
+        res.status(400).json({
+            status: "FAIL",
+            message: error.message
+        })
+    }
 }
 
-exports.create = (req, res) => {
-    const user = new User({
-        full_name: req.body.full_name,
-        email: req.body.email,
-        password: req.body.password,
-        address: req.body.address
-    })
-
-    user.save(user)
-    .then(response => {
-        res.send(response)
-    })
-    .catch(error => {
+exports.create = async (req, res) => {
+    try {
+        const user = userService.create({
+            full_name: req.body.full_name,
+            email: req.body.email,
+            password: req.body.password,
+            address: req.body.address
+        })
+        res.send(user)
+    }
+    catch(error) {
         res.status(409).send({
             message: error.message || "Some error while create users."
         })
-    })
+    }
 }
