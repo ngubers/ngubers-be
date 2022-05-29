@@ -17,7 +17,7 @@ module.exports = {
     async create(args) {
         try {
             const items = await itemsRepository.create(args)
-            return items
+            return items.save()
         }
         catch(error) {
             console.log(error)
