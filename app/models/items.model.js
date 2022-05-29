@@ -10,7 +10,6 @@ module.exports = (mongoose) => {
         {timestamps: true}
     )
 
-//ntar tanyain
     schema.method("toJson", function() {
         const {__v, _id, ...object} = this.toObject()
         object.id = _id
