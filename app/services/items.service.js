@@ -1,9 +1,9 @@
-const itemsRepository = require('../repositories/items.respository')
+const itemsRepository = require('../repositories/items.repository')
 
 module.exports = {
     async list() {
         try {
-            const user = await userRepository.findAll()
+            const user = await itemsRepository.findAll()
 
             return {
                 data: user

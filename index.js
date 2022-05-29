@@ -30,6 +30,7 @@ app.get('/', (req, res) => {
 })
 
 require('./app/routes/user.routes')(app)
+require('./app/routes/items.routes')(app)
 
 const PORT = 3000
 app.listen(PORT, () => {

@@ -2,8 +2,8 @@ module.exports = (mongoose) => {
     const schema = mongoose.Schema(
         {
             item_name: String,
-            price: String,
-            weight: String,
+            price: Number,
+            weight: Number,
             starting_location: String,
             destination: String
         },

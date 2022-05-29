@@ -19,14 +19,17 @@ exports.list = async (req, res) => {
 
 exports.create = async (req, res) => {
     try {
-        const user = userService.create({
+        const items = await itemsService.create({
             item_name: req.body.item_name,
             price: req.body.price,
             weight: req.body.weight,
             starting_location: req.body.starting_location,
             destination : req.body.destination
         })
-        res.send(user)
+        res.send({
+            message: "Item Berhasil didaftarkan",
+            data: items
+        })
     }
     catch(error) {
         res.status(409).send({
