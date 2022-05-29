@@ -3,7 +3,9 @@ const cors = require('cors')
 
 const app = express()
 
+//ngirim dari json
 app.use(express.json())
+//ngirim data semisal file gambar dsb
 app.use(express.urlencoded({extended: true}))
 
 const db = require('./app/models')
@@ -27,6 +29,7 @@ app.get('/', (req, res) => {
 })
 
 require('./app/routes/user.routes')(app)
+require('./app/routes/items.routes')(app)
 
 const PORT = 3000
 app.listen(PORT, () => {
