@@ -1,8 +1,9 @@
-const itemsService = require('../services/items.service')
+const { use } = require('express/lib/application')
+const userService = require('../services/user.service')
 
 exports.list = async (req, res) => {
     try {
-        const response = await itemsService.list()
+        const response = await userService.list()
         const {data} = response
 
         res.json({
@@ -19,18 +20,66 @@ exports.list = async (req, res) => {
 
 exports.create = async (req, res) => {
     try {
-        const user = userService.create({
-            item_name: req.body.item_name,
-            price: req.body.price,
-            weight: req.body.weight,
-            starting_location: req.body.starting_location,
-            destination : req.body.destination
+        const user = await userService.create({
+            full_name: req.body.full_name,
+            email: req.body.email,
+            password: req.body.password,
+            address: req.body.address
         })
-        res.send(user)
+        res.send({
+            message: "User berhasil dibuat",
+            data: user
+        })
     }
     catch(error) {
         res.status(409).send({
-            message: error.message || "Some error while making an order"
+            message: error.message || "Some error while create users."
+        })
+    }
+}
+
+exports.find = async (req, res) => {
+    try{
+        const {id} = req.params
+        const user = await userService.find(id)
+        
+        if (!user) {
+            throw Error('Data user tidak ditemukan')
+        }
+
+        res.json({
+            message: "Data user ditemukan",
+            data: user
+        })
+
+    } catch(error) {
+        res.status(404).send({
+            message: error.message
+        })
+    }
+}
+
+exports.update = async (req, res) => {
+    try {
+        const {id} = req.params
+        const {full_name, email, password, address} = req.body
+        const user = await userService.update(id, {
+            full_name,
+            email,
+            password,
+            address
+        })
+
+        if (!user) {
+            throw Error('User tidak ditemukan')
+        }
+
+        res.json({
+            message: "Data user berhasil di update",
+        })
+    } catch(error) {
+        res.status(400).json({
+            message: error.message
         })
     }
 }
