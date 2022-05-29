@@ -1,6 +1,5 @@
 const express = require('express')
 const cors = require('cors')
-const res = require('express/lib/response')
 
 const app = express()
 

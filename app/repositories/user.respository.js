@@ -11,5 +11,8 @@ module.exports = {
     },
     create(args) {
         return new User(args)
+    },
+    update(id, args) {
+        return User.findByIdAndUpdate(id, args)
     }
 }
