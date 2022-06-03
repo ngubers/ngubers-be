@@ -9,6 +9,9 @@ module.exports = {
     findById(id) {
         return User.findById(id)
     },
+    findByEmail(email) {
+        return User.findOne({email})
+    },
     create(args) {
         return new User(args)
     },

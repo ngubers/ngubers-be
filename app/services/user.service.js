@@ -33,6 +33,16 @@ module.exports = {
         }
     },
 
+    async findByEmail(email) {
+        try {
+            const user = await userRepository.findByEmail(email)
+            return user
+        }
+        catch(error) {
+            console.log(error)
+        }
+    },
+
     async update(id, args) {
         try {
             const user = await userRepository.update(id, args)

@@ -1,5 +1,17 @@
-const { use } = require('express/lib/application')
 const userService = require('../services/user.service')
+
+function encryptPassword(password) {
+    return new Promise((resolve, rejected) => {
+        bcrypt.hash(password, salt, (err, encryptedPassword) => {
+            if (!!err) {
+                rejected(err)
+                return
+            }
+
+            resolve(encryptedPassword)
+        })
+    })
+}
 
 exports.list = async (req, res) => {
     try {
@@ -19,12 +31,14 @@ exports.list = async (req, res) => {
 }
 
 exports.create = async (req, res) => {
+    const {full_name, email, password, address} = req.body
     try {
+        const encryptedPassword = encryptPassword(password)
         const user = await userService.create({
-            full_name: req.body.full_name,
-            email: req.body.email,
-            password: req.body.password,
-            address: req.body.address
+            full_name: full_name,
+            email: email,
+            password: encryptedPassword,
+            address: address
         })
         res.send({
             message: "User berhasil dibuat",
@@ -60,13 +74,14 @@ exports.find = async (req, res) => {
 }
 
 exports.update = async (req, res) => {
+    const {id} = req.params
+    const {full_name, email, password, address} = req.body
     try {
-        const {id} = req.params
-        const {full_name, email, password, address} = req.body
+        const encryptedPassword = encryptPassword(password)
         const user = await userService.update(id, {
             full_name,
             email,
-            password,
+            password: encryptedPassword,
             address
         })
 
