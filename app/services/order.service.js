@@ -1,14 +1,30 @@
 const userRepository = require('../repositories/user.respository')
-const orderRepository = require('../repositories/order.respository')
+const orderRepository = require('../repositories/order.repository')
+
+async function findIdUser(id) {
+    const users = await userRepository.findById(id)
+
+    return {
+        user: {
+            id: users.id,
+            full_name: users.full_name,
+        }
+    }
+
+}
 
 module.exports = {
     async list() {
         try {
-            // const user = await userRepository.findAll()
-            const order = await orderRepository.findAll()
+            let orders = await orderRepository.findAll()
+
+            orders = orders.map(arr => ({
+                ...orders,
+                user: findIdUser(orders.userId)
+            }))
 
             return {
-                data: order
+                data: orders
             }
         }
         catch(error) {
@@ -18,8 +34,8 @@ module.exports = {
 
     async create(args) {
         try {
-            const user = await userRepository.create(args)
-            return user.save()
+            const order = await orderRepository.create(args)
+            return order.save()
         }
         catch(error) {
             console.log(error)
@@ -28,27 +44,17 @@ module.exports = {
 
     async find(id) {
         try {
-            const user = await userRepository.findById(id)
-            return user
+            const order = await orderRepository.findById(id)
+            return order
         } catch(error) {
-            console.log(error)
-        }
-    },
-
-    async findByEmail(email) {
-        try {
-            const user = await userRepository.findByEmail(email)
-            return user
-        }
-        catch(error) {
             console.log(error)
         }
     },
 
     async update(id, args) {
         try {
-            const user = await userRepository.update(id, args)
-            return user
+            const order = await orderRepository.update(id, args)
+            return order
         } catch(error) {
             console.log(error)
         }

@@ -1,10 +1,8 @@
 module.exports = (mongoose) => {
     const schema = mongoose.Schema(
         {
-            userId: {
-                type: String,
-                required: true
-            },
+            userId:
+                {type: mongoose.Schema.Types.ObjectId,ref:'users'},
             service:{
                 type: String,
                 required: true
@@ -18,8 +16,7 @@ module.exports = (mongoose) => {
                 required: true
             },
             driverId:{
-                type: ObjectId,
-                required: true
+                type: String,
             },
             price:{
                 type: String,
