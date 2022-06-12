@@ -71,7 +71,8 @@ exports.create = async (req, res) => {
 }
 
 exports.update = async (req, res) => {
-    const {id, driverId, status = "pending"} = req.body
+    const {driverId, status = "pending"} = req.body
+    const {id} = req.params
     try {
         if (!driverId) {
             res.statusCode = 400
@@ -84,7 +85,7 @@ exports.update = async (req, res) => {
 
         }
 
-        const order = await orderService.update(id, {
+        await orderService.update(id, {
             driverId,
             status
         })
@@ -92,7 +93,6 @@ exports.update = async (req, res) => {
         res.json({
             status: "OK",
             message: "Order berhasil di update!",
-            data : order
         })
     } catch(error) {
         res.status(500).send({
