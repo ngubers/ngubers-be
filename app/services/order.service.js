@@ -3,12 +3,9 @@ const orderRepository = require('../repositories/order.repository')
 
 async function findIdUser(id) {
     const users = await userRepository.findById(id)
-
     return {
-        user: {
-            id: users.id,
-            full_name: users.full_name,
-        }
+        id: users.id,
+        full_name: users.full_name,
     }
 
 }
@@ -18,9 +15,20 @@ module.exports = {
         try {
             let orders = await orderRepository.findAll()
 
-            orders = orders.map(arr => ({
-                ...orders,
-                user: findIdUser(orders.userId)
+            orders = await Promise.all(orders.map(async (arr) => {
+                const user = await findIdUser(arr.userId)
+                return {
+                    id: arr.id,
+                    service: arr.service,
+                    from: arr.from,
+                    destination: arr.destination,
+                    driver: arr.driverId,
+                    price: arr.price,
+                    date: arr.date,
+                    description: arr.description,
+                    status: arr.status,
+                    user,
+                }
             }))
 
             return {
