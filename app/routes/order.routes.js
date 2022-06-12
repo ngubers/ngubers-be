@@ -5,7 +5,7 @@ module.exports = (app) => {
 
     router.get('/', auth.authorize, order.list)
     router.post('/', auth.authorize, order.create)
-    router.post('/', auth.authorize, order.update)
+    router.put('/:id', auth.authorize, order.update)
 
     app.use('/api/order', router)
 }
