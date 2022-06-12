@@ -66,5 +66,14 @@ module.exports = {
         } catch(error) {
             console.log(error)
         }
+    },
+
+    async delete(id) {
+        try {
+            const order = await orderRepository.delete(id)
+            return order
+        } catch(error) {
+            console.log(error)
+        }
     }
 }

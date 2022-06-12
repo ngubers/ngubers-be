@@ -16,6 +16,6 @@ module.exports = {
         return Order.findByIdAndUpdate(id, args)
     },
     delete(id) {
-        return Order.findIdAndRemove(id)
+        return Order.findByIdAndRemove(id)
     }
 }

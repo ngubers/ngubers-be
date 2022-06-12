@@ -6,6 +6,7 @@ module.exports = (app) => {
     router.get('/', auth.authorize, order.list)
     router.post('/', auth.authorize, order.create)
     router.put('/:id', auth.authorize, order.update)
+    router.delete('/:id', auth.authorize, order.delete)
 
     app.use('/api/order', router)
 }

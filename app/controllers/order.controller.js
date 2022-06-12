@@ -100,3 +100,20 @@ exports.update = async (req, res) => {
         })
     }
 }
+
+exports.delete = async (req, res) => {
+    const {id} = req.params
+    try {
+        await orderService.delete(id)
+        res.json({
+            status: "OK",
+            message: "Order berhasil dihapus!",
+        })
+    } catch(error) {
+        res.statusCode = 500
+        res.json({
+            status: "FAIL",
+            message: error.message || "Some error while delete an order"
+        })
+    }
+}
