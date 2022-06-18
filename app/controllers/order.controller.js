@@ -5,14 +5,14 @@ const orderService = require('../services/order.service')
 exports.list = async (req, res) => {
     try {
         const response = await orderService.list()
-        const {data} = response
+        const { data } = response
 
         res.json({
             status: "OK",
             message: "Data order berhasil ditemukan!",
             data
         })
-    } catch(error) {
+    } catch (error) {
         res.status(400).json({
             status: "FAIL",
             message: error.message
@@ -23,14 +23,14 @@ exports.list = async (req, res) => {
 exports.create = async (req, res) => {
     // Date = "DD/MM/YYYY"
     const {
-        userId, 
-        service, 
-        from, 
-        destination, 
-        driverId = "", 
-        price = 0, 
-        date = moment().format("DD/MM/YYYY"), 
-        description, 
+        userId,
+        service,
+        from,
+        destination,
+        driverId = "",
+        price = 0,
+        date = moment().format("DD/MM/YYYY"),
+        description,
         status = "pending"
     } = req.body
     try {
@@ -62,7 +62,7 @@ exports.create = async (req, res) => {
             data: order
         })
     }
-    catch(error) {
+    catch (error) {
         res.status(500).send({
             status: "FAIL",
             message: error.message || "Some error while making an order"
@@ -71,8 +71,8 @@ exports.create = async (req, res) => {
 }
 
 exports.update = async (req, res) => {
-    const {driverId, status = "pending"} = req.body
-    const {id} = req.params
+    const { driverId, status = "pending" } = req.body
+    const { id } = req.params
     try {
         if (!driverId) {
             res.statusCode = 400
@@ -94,22 +94,44 @@ exports.update = async (req, res) => {
             status: "OK",
             message: "Order berhasil di update!",
         })
-    } catch(error) {
+    } catch (error) {
         res.status(500).send({
             message: error.message || "Some error while making an order"
         })
     }
 }
 
+exports.getByUser = async (req, res) => {
+    try {
+        const { id } = req.params
+
+        const response = await orderService.findByUser(id)
+        const { data } = response
+
+        res.json({
+            status: "OK",
+            message: "Data order user berhasil ditemukan!",
+            data
+        })
+
+    } catch (error) {
+        res.statusCode = 500
+        res.json({
+            status: "FAIL",
+            message: error.message
+        })
+    }
+}
+
 exports.delete = async (req, res) => {
-    const {id} = req.params
+    const { id } = req.params
     try {
         await orderService.delete(id)
         res.json({
             status: "OK",
             message: "Order berhasil dihapus!",
         })
-    } catch(error) {
+    } catch (error) {
         res.statusCode = 500
         res.json({
             status: "FAIL",

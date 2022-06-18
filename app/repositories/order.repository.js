@@ -3,8 +3,8 @@ const db = require('../models')
 const Order = db.orders
 
 module.exports = {
-    findAll() {
-        return Order.find()
+    findAll(query = {}) {
+        return Order.find(query)
     },
     findById(id) {
         return Order.findById(id)

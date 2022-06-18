@@ -3,10 +3,13 @@ const cors = require('cors')
 
 const app = express()
 
+// cors handling
+app.use(cors())
+
 //ngirim dari json
 app.use(express.json())
 //ngirim data semisal file gambar dsb
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true }))
 
 const db = require('./app/models')
 db.mongoose
@@ -20,7 +23,7 @@ db.mongoose
     .catch(error => {
         console.log("Can't connect to the database!", error)
         process.exit()
-    }) 
+    })
 
 app.get('/', (req, res) => {
     res.json({
