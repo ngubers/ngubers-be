@@ -5,6 +5,7 @@ module.exports = (app) => {
 
     router.get('/', auth.authorize, order.list)
     router.post('/', auth.authorize, order.create)
+    router.get('/:id', auth.authorize, order.find)
     router.put('/:id', auth.authorize, order.update)
     router.delete('/:id', auth.authorize, order.delete)
 

@@ -117,3 +117,23 @@ exports.delete = async (req, res) => {
         })
     }
 }
+exports.find = async (req, res) => {
+    try{
+        const {id} = req.params
+        const order = await orderService.find(id)
+        
+        if (!order) {
+            throw Error('Data order tidak ditemukan')
+        }
+
+        res.json({
+            message: "Data order ditemukan",
+            data: order
+        })
+
+    } catch(error) {
+        res.status(404).send({
+            message: error.message
+        })
+    }
+}
