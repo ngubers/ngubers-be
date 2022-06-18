@@ -105,13 +105,12 @@ exports.getByUser = async (req, res) => {
     try {
         const { id } = req.params
 
-        const response = await orderService.findByUser(id)
-        const { data } = response
+        const order = await orderService.findByUser(id)
 
         res.json({
             status: "OK",
             message: "Data order user berhasil ditemukan!",
-            data
+            data: order
         })
 
     } catch (error) {
@@ -140,10 +139,10 @@ exports.delete = async (req, res) => {
     }
 }
 exports.find = async (req, res) => {
-    try{
-        const {id} = req.params
+    try {
+        const { id } = req.params
         const order = await orderService.find(id)
-        
+
         if (!order) {
             throw Error('Data order tidak ditemukan')
         }
@@ -153,7 +152,7 @@ exports.find = async (req, res) => {
             data: order
         })
 
-    } catch(error) {
+    } catch (error) {
         res.status(404).send({
             message: error.message
         })
