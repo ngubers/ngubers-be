@@ -105,13 +105,12 @@ exports.getByUser = async (req, res) => {
     try {
         const { id } = req.params
 
-        const response = await orderService.findByUser(id)
-        const { data } = response
+        const order = await orderService.findByUser(id)
 
         res.json({
             status: "OK",
             message: "Data order user berhasil ditemukan!",
-            data
+            data: order
         })
 
     } catch (error) {
@@ -136,6 +135,26 @@ exports.delete = async (req, res) => {
         res.json({
             status: "FAIL",
             message: error.message || "Some error while delete an order"
+        })
+    }
+}
+exports.find = async (req, res) => {
+    try {
+        const { id } = req.params
+        const order = await orderService.find(id)
+
+        if (!order) {
+            throw Error('Data order tidak ditemukan')
+        }
+
+        res.json({
+            message: "Data order ditemukan",
+            data: order
+        })
+
+    } catch (error) {
+        res.status(404).send({
+            message: error.message
         })
     }
 }
